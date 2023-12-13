@@ -19,12 +19,12 @@ function App() {
     //   console.log(1);
     // })
 
-    var ary = [1,2,3];
-    ary.map(function() {
-      console.log("아오");
-    })
 
-
+    var 글수정 = function() {
+        let copy = [...글제목];
+        copy[0] = '여자코트 추천';
+        b(copy);
+    }
     
     // function addLike() {   console.log(좋아요);   좋아요 += 1; }
 
@@ -44,36 +44,27 @@ function App() {
             </button>
 
             <span
-                onClick={() => {
-                    let copy = [...글제목];
-                    copy[0] = '여자코트 추천';
-                    b(copy);
-                }}>글 수정</span>
-
-            <div className="list">
-                <h4>{글제목[0]}
-                    <span
-                        onClick={() => {
-                            좋아요변경(좋아요 + 1)
-                        }}>👍</span>{좋아요}</h4>
-                <p>2월 17일 발?행</p>
-            </div>
-            <div className="list">
-                <h4>{글제목[1]}
-                </h4>
-                <p>2월 18일 발?행</p>
-            </div>
-            <div className="list">
-                <h4
-                    onClick={() => {
-                        if (modal) {
-                            setModal(false)
-                        } else {
-                            setModal(true)
-                        }
-                    }}>{글제목[2]}</h4>
-                <p>2월 19일 발?행</p>
-            </div>
+                onClick={글수정}>글 수정</span>
+                
+            {
+            글제목.map(function(a,i){
+                return(
+                    <div className='list' key={i}>
+                        <h4 onClick={()=>{
+                            if(modal){
+                                setModal(false)
+                                
+                            }else{
+                                setModal(true)
+                            }
+                        }}> {글제목[i]} 
+                        <span onClick={()=>{좋아요변경(좋아요 + 1)}}>👍</span> {좋아요}
+                        </h4>
+                        <p>2월 17일 발행</p>
+                    </div>
+                )
+            }) 
+        }
 
             {/* <div className='modal'>
                 <h4>제목</h4>
@@ -81,10 +72,10 @@ function App() {
                 <p>상세내용</p>
               </div> */
             }
-
             {
+                
                 modal == true
-                    ? <Modal/>
+                    ? <Modal color={'skyblue'} 글수정={글수정} 글제목={글제목}/>
                     : null
             }
 
@@ -92,13 +83,14 @@ function App() {
     );
 }
 
-function Modal() {
+function Modal(props) {
     //component 문법! 의미없는 div가 아닌 그냥 묶는법<> </>
     return (
-        <div className='modal'>
-            <h4>제목</h4>
+        <div className='modal' style={{background : props.color}}>
+            <h4>{props.글제목[i]}</h4>
             <p>날짜</p>
             <p>상세내용</p>
+            <button onClick={props.글수정}>글 수정</button>
         </div>
     )
 }
