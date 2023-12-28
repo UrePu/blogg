@@ -13,6 +13,7 @@ function App() {
     let [글제목, b] = useState(['남자코트 추천', '강남 우동맛집', '파이썬독학'])
     let [좋아요, 좋아요변경] = useState(0);
     let [modal, setModal] = useState(false)
+    let [title, setTitle] = useState(0)
 
    
     // [1,2,3].map(function(){
@@ -53,9 +54,9 @@ function App() {
                         <h4 onClick={()=>{
                             if(modal){
                                 setModal(false)
-                                
                             }else{
                                 setModal(true)
+                                setTitle(i)
                             }
                         }}> {글제목[i]} 
                         <span onClick={()=>{좋아요변경(좋아요 + 1)}}>👍</span> {좋아요}
@@ -73,9 +74,8 @@ function App() {
               </div> */
             }
             {
-                
                 modal == true
-                    ? <Modal color={'skyblue'} 글수정={글수정} 글제목={글제목}/>
+                    ? <Modal color={'skyblue'} 글수정={글수정} 글제목={글제목} title={title}/>
                     : null
             }
 
@@ -87,7 +87,7 @@ function Modal(props) {
     //component 문법! 의미없는 div가 아닌 그냥 묶는법<> </>
     return (
         <div className='modal' style={{background : props.color}}>
-            <h4>{props.글제목[i]}</h4>
+            <h4>{props.글제목[props.title]}</h4>
             <p>날짜</p>
             <p>상세내용</p>
             <button onClick={props.글수정}>글 수정</button>
